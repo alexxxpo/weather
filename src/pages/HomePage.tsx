@@ -8,11 +8,12 @@ export default function HomePage() {
 
     const [search, setSearch] = React.useState('')
     const debounced = useDebounce(search, 500)
-    const { isError, error, data, isLoading } = useGetCurrentWeatherQuery(debounced, { skip: debounced.length < 3 })
-    const err = useHandleError(error)
-    const tempC = data ? data.current.temp_c : 0
-    const city = data ? data.location.name : ''
-    const country = data ? data.location.country : ''
+    const { isError: searchIsError, error: searchError, data: searchData, isLoading: searchIsLoading } = useGetCurrentWeatherQuery(debounced, { skip: debounced.length < 3 })
+    const { isError: ipIsError, error: ipError, data: ipData, isLoading: ipIsLoading } = useGetCurrentWeatherQuery('auto:ip')
+    const err = useHandleError(searchError)
+    const tempC = searchData ? searchData.current.temp_c : 0
+    const city = searchData ? searchData.location.name : ''
+    const country = searchData ? searchData.location.country : ''
 
     if (err.status === 404) {
         return <NotFound />
@@ -20,6 +21,7 @@ export default function HomePage() {
 
     return (
         <div className="home container pt-24 px-10 pb-10 mx-auto">
+
             <div className="search flex justify-center items-center mx-auto mb-10 max-w-[560px]">
                 <input
                     type="text"
@@ -30,16 +32,31 @@ export default function HomePage() {
                 />
             </div>
             <div className="weather_section flex justify-center items-center flex-col">
-                {isLoading && (<h1>Информация загружается...</h1>)}
-                {!isError && !data && (<div className="weather_info">
+                {searchIsLoading && (<h1>Информация загружается...</h1>)}
+                {!searchIsError && !searchData && (<div className="weather_info">
                     <div>Приветствуем вас на нашем метео-портале!</div>
                     <div>Посмотрите погоду в своем городе прямо сейчас!</div>
-                </div>)}                
-                {!isError && data && (<div className="weather_info">
+                </div>)}
+                {!searchIsError && searchData && (<div className="weather_info">
                     <div>Погода в городе  {city}, {country}</div>
                     <div>Температура воздуха: {tempC} &deg;C</div>
+                    <div className="flex items-center">
+                        <div>{searchData?.current.condition.text} </div>
+                        <img src={searchData?.current.condition.icon} alt="cond" />
+                    </div>
                 </div>)}
-                {isError && (<div>{err.message}</div>)}
+                {searchIsError && (<div>{err.message}</div>)}
+
+                <div className="ipCurrentWeather">
+                    <div>Вы находитесь в городе {ipData?.location.name}</div>
+                    <div>сейчас там {ipData?.current.temp_c} &deg;C</div>
+                    <div className="flex items-center">
+                        <div>{ipData?.current.condition.text} </div>
+                        <img src={ipData?.current.condition.icon} alt="cond" />
+                    </div>
+
+
+                </div>
             </div>
         </div>
 

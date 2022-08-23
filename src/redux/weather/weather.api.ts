@@ -16,7 +16,17 @@ export const weatherApi = createApi({
       }),
       
     }),
+    getLocationByIP: builder.query<ICurrentWeather, string>({
+      query: (search: string) => ({
+        url: '/ip.json',
+        params: {
+          key: 'f65af894f8f34de4908125332221408',
+          q: search,
+          lang: 'ru'
+        }
+      })
+    })
   }),
 })
 
-export const { useGetCurrentWeatherQuery } = weatherApi
+export const { useGetCurrentWeatherQuery, useGetLocationByIPQuery } = weatherApi
