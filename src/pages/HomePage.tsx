@@ -10,7 +10,6 @@ export default function HomePage() {
     const [search, setSearch] = React.useState('')
     const debounced = useDebounce(search, 500)
     const { isError: searchIsError, error: searchError, data: searchData, isLoading: searchIsLoading } = useGetCurrentWeatherQuery(debounced, { skip: debounced.length < 3 })
-    const { isError: ipIsError, error: ipError, data: ipData, isLoading: ipIsLoading } = useGetCurrentWeatherQuery('auto:ip')
     const err = useHandleError(searchError)
     const tempC = searchData ? searchData.current.temp_c : 0
     const city = searchData ? searchData.location.name : ''
@@ -48,18 +47,7 @@ export default function HomePage() {
                         <img src={searchData?.current.condition.icon} alt="cond" />
                     </div>
                 </div>)}
-                {searchIsError && (<div>{err.message}</div>)}
-
-                <div className="ipCurrentWeather">
-                    <div>Вы находитесь в городе {ipData?.location.name}</div>
-                    <div>сейчас там {ipData?.current.temp_c} &deg;C</div>
-                    <div className="flex items-center">
-                        <div>{ipData?.current.condition.text} </div>
-                        <img src={ipData?.current.condition.icon} alt="cond" />
-                    </div>
-
-
-                </div>
+                {searchIsError && (<div>{err.message}</div>)}                
             </div>
         </div>
 
