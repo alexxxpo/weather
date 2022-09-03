@@ -1,8 +1,13 @@
 import { useGetCurrentWeatherQuery } from '../redux/weather/weather.api'
 
-export default function WeatherCard() {
+interface IWeatherCardProps {
+    query?: string
+}
 
-    const { isLoading, isError, data } = useGetCurrentWeatherQuery('auto:ip')
+export default function WeatherCard(props:IWeatherCardProps ) {
+
+    const searchQuery = props.query ? props?.query.length < 3 ? 'auto:ip' : props?.query :'auto:ip'
+    const { isLoading, isError, data } = useGetCurrentWeatherQuery(searchQuery, {skip: searchQuery.length < 3})
 
     const wind: string = data?.current.wind_kph ? ((data?.current.wind_kph / 3600) * 1000).toFixed(1).toString() : '-'
     const tempC: string = data?.current.temp_c ? (data?.current.temp_c).toString() : '-'
