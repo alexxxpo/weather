@@ -1,4 +1,5 @@
 import React from 'react'
+import WeatherCard from '../components/WeatherCard'
 import useDebounce from '../hooks/useDebounce'
 import useHandleError from '../hooks/useHandleError'
 import { useGetCurrentWeatherQuery } from '../redux/weather/weather.api'
@@ -21,6 +22,8 @@ export default function HomePage() {
 
     return (
         <div className="home container pt-24 px-10 pb-10 mx-auto">
+
+            <WeatherCard/>
 
             <div className="search flex justify-center items-center mx-auto mb-10 max-w-[560px]">
                 <input
