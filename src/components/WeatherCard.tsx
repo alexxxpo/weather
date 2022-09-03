@@ -1,5 +1,3 @@
-import React from 'react'
-import { JsxElement } from 'typescript'
 import { useGetCurrentWeatherQuery } from '../redux/weather/weather.api'
 
 export default function WeatherCard() {
@@ -14,6 +12,12 @@ export default function WeatherCard() {
     const condition: string = data?.current.condition.text ? data?.current.condition.text : '-'
     const conditionImgSrc: string = data?.current.condition.icon ? data?.current.condition.icon : ''
 
+    if (isError) return (
+        <div className='weather_card'>
+            <div className='error'>Что-то пошло не так</div>
+        </div>
+    )
+    
     if (isLoading) return (
         <div className='weather_card'>
             <div className='loader'>Загрузка...</div>
