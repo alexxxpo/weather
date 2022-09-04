@@ -10,18 +10,15 @@ export default function Search() {
         dispatch(setSearch(query))
     }
 
-    // const [search, setSearch] = React.useState('')
-    return (
-        <div>
-            <div className="search flex justify-center items-center mx-auto mb-10 max-w-[560px]">
-                <input
-                    type="text"
-                    className='border rounded-md border-gray-300 h-[42px] w-full px-5 outline-none'
-                    placeholder='Начните вводить название города'
-                    value={search}
-                    onChange={e => searchHandler(e.target.value)}
-                />
-            </div>
-        </div>
+    return (        
+        <div className="search flex flex-1 justify-center items-center max-w-[560px]">
+            <input
+                type="text"
+                className='border rounded-md border-gray-300 h-[42px] w-full px-5 outline-none'
+                placeholder='Начните вводить название города'
+                value={search}
+                onChange={e => searchHandler(e.target.value)}
+            />
+        </div>        
     )
 }

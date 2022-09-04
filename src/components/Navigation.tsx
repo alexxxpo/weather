@@ -4,13 +4,13 @@ import Search from './Search'
 
 export default function Navigation() {
     return (
-        <div className='fixed left-0 top-0 w-full flex justify-between items-center h-14 bg-blue-400 text-white shadow-md' >
+        <div className='fixed left-0 top-0 w-full flex justify-between items-center h-14 bg-blue-400 shadow-md' >
             <div className="container flex justify-between items-center px-5 mx-auto">
                 <div className="logo font-bold text-white">
                     <Link to="/">My Weather</Link>
                 </div>
-                <Search></Search>
-                <div className="navigation">
+                <Search/>
+                <div className="navigation text-white">
                     <Link to="/auth">Войти</Link>
                 </div>
             </div>

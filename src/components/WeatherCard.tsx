@@ -13,6 +13,7 @@ export default function WeatherCard(props:IWeatherCardProps ) {
     const tempC: string = data?.current.temp_c ? (data?.current.temp_c).toString() : '-'
     const feelslike: string = data?.current.feelslike_c ? data?.current.feelslike_c.toString() : '-'
     const pres: string = data?.current.pressure_mb ? (data?.current.pressure_mb * 0.750064).toFixed(1).toString() : '-'
+    const country = data ? data?.location.country === 'Russia' ? 'Россия' : data?.location.country : '-'
     const city: string = data?.location.name ? data?.location.name : '-'
     const condition: string = data?.current.condition.text ? data?.current.condition.text : '-'
     const conditionImgSrc: string = data?.current.condition.icon ? data?.current.condition.icon : ''
@@ -31,7 +32,7 @@ export default function WeatherCard(props:IWeatherCardProps ) {
 
     return (
         <div className='weather_card'>
-            <h4 className="location">{city}</h4>
+            <h4 className="location">{country}, {city}</h4>
             <p className='weather_card__current_temp text-[5em]'>{tempC} &deg;C</p>
             <p>Ощущается как {feelslike} &deg;C</p>
             <img className='weather_card__condition_icon' src={conditionImgSrc} alt={condition} />
