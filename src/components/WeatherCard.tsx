@@ -7,12 +7,18 @@ interface IWeatherCardProps {
 }
 
 export default function WeatherCard(props: IWeatherCardProps) {
-    
+
     const checkCity = (city: string, list: string[][], country: string = 'Russia'): string => {
-        return list.reduce((res: string, item: string[]): string => {
-            if (item[1] === city) res = item[0]
-            return res
-        }, '')
+        console.log(country);
+        
+        if (country.toLowerCase() === 'russia' || country.toLowerCase() === 'россия') {
+            return list.reduce((res: string, item: string[]): string => {
+                if (item[1] === city) res = item[0]
+                return res
+            }, '')
+        } else {
+            return city
+        }
     }
     const searchQuery = props.query ? props?.query.length < 3 ? 'auto:ip' : props?.query : 'auto:ip'
     const { isLoading, isError, data } = useGetCurrentWeatherQuery(searchQuery, { skip: searchQuery.length < 3 })
@@ -22,7 +28,7 @@ export default function WeatherCard(props: IWeatherCardProps) {
     const feelslike: string = data?.current.feelslike_c ? data?.current.feelslike_c.toString() : '-'
     const pres: string = data?.current.pressure_mb ? (data?.current.pressure_mb * 0.750064).toFixed(1).toString() : '-'
     const country = data ? data?.location.country === 'Russia' ? 'Россия' : data?.location.country : '-'
-    const city: string = data ? checkCity(data?.location.name, russianCities) : ''
+    const city: string = data ? checkCity(data?.location.name, russianCities, country) : ''
     const condition: string = data?.current.condition.text ? data?.current.condition.text : '-'
     const conditionImgSrc: string = data?.current.condition.icon ? data?.current.condition.icon : ''
 
