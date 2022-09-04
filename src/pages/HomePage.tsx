@@ -1,13 +1,11 @@
 import WeatherCard from '../components/WeatherCard'
 import { useAppSelector } from '../hooks/reduxHooks'
 import useDebounce from '../hooks/useDebounce'
-import russianCities from '../cities_ru_en.json'
 
 export default function HomePage() {
 
     const search = useAppSelector((state) => state.setSearchWeather.search)
     const debounced = useDebounce(search, 500)
-    console.log(russianCities);
     
 
     return (
